@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
+import ExpensesPage, { ExpensesLoader } from "./pages/ExpensesPage";
 
 // warning meassage import
 import { ToastContainer, toast } from "react-toastify";
@@ -27,6 +28,12 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         loader: dashboardLoader,
         action: dashboardAction,
+        errorElement: <Error />,
+      },
+      {
+        path: "expenses",
+        element: <ExpensesPage />,
+        loader: ExpensesLoader,
         errorElement: <Error />,
       },
       {
