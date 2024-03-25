@@ -1,20 +1,11 @@
-// rrd imports
 import { Link, useLoaderData } from "react-router-dom";
-
-// library imports
 import { toast } from "react-toastify";
-
-// components
 import Intro from "../components/Landing";
 import AddBudgetForm from "../components/Add_budget_form";
 import AddExpenseForm from "../components/Addexpenseform";
 import BudgetItem from "../components/Budget_item";
+import { createBudget, createExpense, deleteItem, fetchData } from "../helpers";
 
-//  helper functions
-import { createBudget, createExpense, fetchData } from "../helpers";
-import Table from "../components/Table";
-
-// loader
 export function dashboardLoader() {
   const userName = fetchData("userName");
   const budgets = fetchData("budgets");
@@ -22,7 +13,6 @@ export function dashboardLoader() {
   return { userName, budgets, expenses };
 }
 
-// action
 export async function dashboardAction({ request }) {
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
@@ -37,7 +27,10 @@ export async function dashboardAction({ request }) {
   }
   if (_action === "createBudget") {
     try {
-      createBudget({ name: values.newBudget, amount: values.newBudgetAmount });
+      createBudget({
+        name: values.newBudget,
+        amount: values.newBudgetAmount,
+      });
       return toast.success("Budget Created!");
     } catch (e) {
       throw new Error("There was a problem creating your Budget.");
@@ -55,9 +48,20 @@ export async function dashboardAction({ request }) {
       throw new Error("There was a problem creating your Budget.");
     }
   }
+  if (_action === "deleteExpense") {
+    try {
+      deleteItem({
+        key: "expenses",
+        id: values.expenseId,
+      });
+      return toast.success(`Expense deleted`);
+    } catch (e) {
+      throw new Error("There was a problem deleting your Budget.");
+    }
+  }
 }
+
 const handleHistoryClick = () => {
-  // Navigate to the specified URL in the same window/tab
   window.location.href = "/expenses";
 };
 
@@ -67,36 +71,38 @@ const Dashboard = () => {
   return (
     <>
       {userName ? (
-        <div className="dashboard">
-          <h1>
-            Welcome, <span className="accent">{userName}</span> !
+        <div className="container mt-4">
+          <h1 className="mb-4 d-flex justify-content-between align-items-center">
+            Welcome, <span className="text-danger">{userName}</span>
+            <button
+              className="btn btn-success"
+              style={{ marginLeft: "auto" }}
+              onClick={handleHistoryClick}
+            >
+              History
+            </button>
           </h1>
-          <div className="grid-sm">
+          <div className="row">
             {budgets && budgets.length > 0 ? (
-              <div className="grid-lg">
-                <div className="flex-lg">
+              <>
+                <div className="col-md-6 mb-4">
                   <AddBudgetForm />
+                </div>
+                <div className="col-md-6 mb-4">
                   <AddExpenseForm budgets={budgets} />
                 </div>
-                <h2>Existing Budgets</h2>
-                <div className="budgets">
-                  {budgets.map((budget) => (
-                    <BudgetItem key={budget.id} budget={budget} />
-                  ))}
+                <div className="col-md-12">
+                  <h2>Existing Budgets</h2>
+                  <div className="budgets d-flex flex-wrap">
+                    {budgets.map((budget) => (
+                      <BudgetItem key={budget.id} budget={budget} />
+                    ))}
+                  </div>
                 </div>
-
-                <button
-                  className="btn btn--history"
-                  onClick={handleHistoryClick}
-                >
-                  History
-                </button>
-              </div>
+              </>
             ) : (
-              <div className="grid-sm">
-                <p>
-                  Every Penny counts, track your money , track your success!{" "}
-                </p>
+              <div className="col-md-12">
+                <p>Every Penny counts, track your money, track your success!</p>
                 <p>Create a budget to get started</p>
                 <AddBudgetForm />
               </div>
@@ -109,4 +115,5 @@ const Dashboard = () => {
     </>
   );
 };
+
 export default Dashboard;

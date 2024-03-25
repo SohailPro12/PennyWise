@@ -24,43 +24,62 @@ const AddExpenseForm = ({ budgets }) => {
   }, [isSubmitting]);
 
   return (
-    <div className="form-wrapper">
-      <h2 className="h3">
+    <div className="container mt-4r">
+      <h2 className="text-center mb-4 text-danger">
         Add New{" "}
         <span className="accent">
           {budgets.length === 1 && `${budgets.map((budg) => budg.name)}`}
         </span>{" "}
         Expense
       </h2>
-      <fetcher.Form method="post" className="grid-sm" ref={formRef}>
-        <div className="expense-inputs">
+      <fetcher.Form method="post" className="row g-3" ref={formRef}>
+        <div className="col-md-6">
           <div className="grid-xs">
-            <label htmlFor="newExpense">Expense Name</label>
+            <label htmlFor="newExpense" className="form-label text-danger">
+              Expense Name
+            </label>
             <input
               type="text"
               name="newExpense"
               id="newExpense"
               placeholder="e.g., Coffee"
+              className="form-control"
               ref={focusRef}
               required
             />
           </div>
-          <div className="grid-xs">
-            <label htmlFor="newExpenseAmount">Amount</label>
-            <input
-              type="number"
-              step="0.01"
-              inputMode="decimal"
-              name="newExpenseAmount"
-              id="newExpenseAmount"
-              placeholder="e.g., 3.50"
-              required
-            />
+          <div className="col-md-6">
+            <label
+              htmlFor="newExpenseAmount"
+              className="form-label text-danger"
+            >
+              Amount
+            </label>
+            <div className="input-group">
+              <span className="input-group-text">$</span>
+              <input
+                type="number"
+                step="0.01"
+                inputMode="decimal"
+                name="newExpenseAmount"
+                id="newExpenseAmount"
+                className="form-control"
+                placeholder="e.g., 3.50"
+                required
+              />
+            </div>
           </div>
         </div>
-        <div className="grid-xs" hidden={budgets.length === 1}>
-          <label htmlFor="newExpenseBudget">Budget Category</label>
-          <select name="newExpenseBudget" id="newExpenseBudget" required>
+        <div className={budgets.length === 1 ? "col-md-6 d-none" : "col-md-6"}>
+          <label htmlFor="newExpenseBudget" className="form-label text-danger">
+            Budget Category
+          </label>
+          <select
+            name="newExpenseBudget"
+            id="newExpenseBudget"
+            className="form-select"
+            required
+          >
             {budgets
               .sort((a, b) => a.createdAt - b.createdAt)
               .map((budget) => {
@@ -73,16 +92,22 @@ const AddExpenseForm = ({ budgets }) => {
           </select>
         </div>
         <input type="hidden" name="_action" value="createExpense" />
-        <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <span>Submitting…</span>
-          ) : (
-            <>
-              <span>Add Expense</span>
-              <PlusCircleIcon width={20} />
-            </>
-          )}
-        </button>
+        <div className="col-md-12 text-center">
+          <button
+            type="submit"
+            className="btn btn-danger"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <span>Submitting...</span>
+            ) : (
+              <>
+                <span>Add Expense</span>
+                <PlusCircleIcon className="ms-2" width={20} />
+              </>
+            )}
+          </button>
+        </div>
       </fetcher.Form>
     </div>
   );

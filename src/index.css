@@ -1,3 +1,97 @@
+.container {
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+  }
+  
+  .btn-pennywise {
+    background-color: #e50914; /* Red */
+    border-color: #51cf66; /* Green */
+    color: #fff; /* White text color */
+  }
+  
+  .btn-pennywise:hover {
+    background-color: #ff6347; /* Light red on hover */
+  }
+  
+  .form-control {
+    background-color: #fff; /* White background for form inputs */
+    color: #333; /* Dark text color */
+    border-color: #ced4da; /* Light gray border color */
+  }
+  
+  .input-group-text {
+    background-color: #fff; /* White background for input group text */
+    color: #333; /* Dark text color */
+    border-color: #ced4da; /* Light gray border color */
+  }
+  
+  .text-danger {
+    color: #e50914; /* Red text color */
+  }
+  
+  .text-success {
+    color: #51cf66; /* Green text color */
+  }
+ 
+  .btn-pennywise {
+    background-color: #e50914; /* Red */
+    border-color: #51cf66; /* Green */
+    color: #fff; /* White text color */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  .btn-pennywise:hover {
+    background-color: #ff6347; /* Light red on hover */
+  }
+
+  /*dashboard*/
+  /* Custom CSS for input groups */
+.input-group {
+  margin-bottom: 1rem; /* Adjust as needed */
+}
+
+/* Custom CSS for containers */
+.container {
+  max-width: 100%; /* Ensure container fills the width of the screen */
+  padding-right: 15px; /* Add padding for responsiveness */
+  padding-left: 15px; /* Add padding for responsiveness */
+  margin-right: auto; /* Center the container */
+  margin-left: auto; /* Center the container */
+}
+
+@media (min-width: 576px) {
+  /* Adjust input groups for small screens */
+  .input-group {
+    margin-bottom: 1.5rem; /* Adjust as needed */
+  }
+}
+
+@media (min-width: 768px) {
+  /* Adjust input groups for medium screens */
+  .input-group {
+    margin-bottom: 2rem; /* Adjust as needed */
+  }
+}
+
+@media (min-width: 992px) {
+  /* Adjust input groups for large screens */
+  .input-group {
+    margin-bottom: 2.5rem; /* Adjust as needed */
+  }
+}
+
+@media (min-width: 1200px) {
+  /* Adjust input groups for extra large screens */
+  .input-group {
+    margin-bottom: 3rem; /* Adjust as needed */
+  }
+}
+
+
+
+  /* footer.css */
 /* ⚠️ CSS optimized for the tutorial, not for expanding to a larger site. ⚠️ */
 
 *,
@@ -551,20 +645,6 @@ progress[value]::-webkit-progress-value {
   -webkit-transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-/* error pages */
-.error {
-  -ms-grid-row-align: center;
-  -ms-grid-column-align: center;
-  place-self: center;
-  display: -ms-grid;
-  display: grid;
-  place-items: center;
-  place-content: center;
-  gap: var(--space-lg);
-  padding-block: var(--space-lg);
-  text-align: center;
-}
-
 /* chart component */
 .table {
   overflow-x: auto;
@@ -688,4 +768,3 @@ footer {
   top: 120px; /* Adjust as needed */
   right: 15px; /* Adjust as needed */
 }
-

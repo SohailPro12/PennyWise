@@ -2,11 +2,12 @@ import ExpenseItem from "./Expense_Item";
 
 const Table = ({ expenses }) => {
   return (
-    <div className="table">
-      <table>
+    <div className="table-responsive">
+      {" "}
+      <table className="table table-striped table-hover">
         <thead>
           <tr>
-            {["Name", "Amount", "Date"].map((header, index) => (
+            {["Name", "Amount", "Date", "Budget", ""].map((header, index) => (
               <th key={index}>{header}</th>
             ))}
           </tr>
@@ -22,4 +23,5 @@ const Table = ({ expenses }) => {
     </div>
   );
 };
+
 export default Table;
