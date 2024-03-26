@@ -18,6 +18,9 @@ import Main, { mainLoader } from "./layouts/Main";
 //actions
 import { deleteUserAction } from "./actions/Deleteuser";
 import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage";
+import { deleteBudget } from "./actions/deleteBudget";
+import MissionPage from "./pages/MissionPage";
+import WhoAreWePage from "./pages/WhoAreWePage";
 
 const router = createBrowserRouter([
   {
@@ -42,11 +45,27 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
+        path: "mission",
+        element: <MissionPage />,
+        errorElement: <Error />,
+      },
+      {
+        path: "who-are-we",
+        element: <WhoAreWePage />,
+        errorElement: <Error />,
+      },
+      {
         path: "budget/:id",
         element: <BudgetPage />,
         loader: budgetLoader,
         action: budgetAction,
         errorElement: <Error />,
+        children: [
+          {
+            path: "delete",
+            action: deleteBudget,
+          },
+        ],
       },
       {
         path: "logout",

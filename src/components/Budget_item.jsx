@@ -1,9 +1,11 @@
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import {
   calculateSpentByBudget,
   formatCurrency,
   formatPercentage,
 } from "../helpers";
+
+import { BanknotesIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const BudgetItem = ({ budget, showDelete = false }) => {
   const { id, name, amount } = budget;
@@ -49,13 +51,35 @@ const BudgetItem = ({ budget, showDelete = false }) => {
             <strong>Remaining:</strong> {formatCurrency(remaining)}
           </small>
         </div>
-        {/* {
-  showDelete ? (
-    <Form>
-
-    </Form>
-  ):()
-} */}
+        <div className="mt-4">
+          {showDelete ? (
+            <div className="d-flex justify-content-center justify-content-sm-start">
+              <Form
+                method="post"
+                action="delete"
+                onSubmit={(event) => {
+                  if (
+                    !confirm("Are you sure you want to delete this budget?")
+                  ) {
+                    event.preventDefault();
+                  }
+                }}
+              >
+                <button type="submit" className="btn btn-danger">
+                  <span>Delete</span>
+                  <TrashIcon width={20} />
+                </button>
+              </Form>
+            </div>
+          ) : (
+            <div className="d-flex justify-content-center justify-content-md-start">
+              <Link to={`/budget/${id}`} className="btn btn-danger">
+                <span>View Details</span>
+                <BanknotesIcon width={20} />
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
