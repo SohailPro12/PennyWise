@@ -10,7 +10,7 @@ export function ExpensesLoader() {
 
 const handleHomeClick = () => {
   // Navigate to the specified URL in the same window/tab
-  window.location.href = "/";
+  window.location.href = "/Home";
 };
 
 export async function expensesAction({ request }) {

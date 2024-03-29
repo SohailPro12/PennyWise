@@ -1,10 +1,12 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
-import Intro from "../components/Landing";
+
 import AddBudgetForm from "../components/Add_budget_form";
 import AddExpenseForm from "../components/Addexpenseform";
 import BudgetItem from "../components/Budget_item";
 import { createBudget, createExpense, deleteItem, fetchData } from "../helpers";
+import Intro from "../components/auth_alternative";
+import { useNavigate } from "react-router-dom";
 
 export function dashboardLoader() {
   const userName = fetchData("userName");
@@ -20,6 +22,7 @@ export async function dashboardAction({ request }) {
   if (_action === "newUser") {
     try {
       localStorage.setItem("userName", JSON.stringify(values.userName));
+      window.location.href = "/Home";
       return toast.success(`Welcome, ${values.userName}`);
     } catch (e) {
       throw new Error("There was a problem creating your account.");

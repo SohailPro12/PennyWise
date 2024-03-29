@@ -6,7 +6,7 @@ import ExpensesPage, {
   ExpensesLoader,
 } from "./pages/ExpensesPage";
 
-// warning meassage import
+// warning message import
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -21,10 +21,13 @@ import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage";
 import { deleteBudget } from "./actions/deleteBudget";
 import MissionPage from "./pages/MissionPage";
 import WhoAreWePage from "./pages/WhoAreWePage";
+import LandingPage from "./pages/LandingPage"; // Corrected import
+import Intro from "./components/auth_alternative";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    /*  element:  <LandingPage />, */
     element: <Main />,
     loader: mainLoader,
     errorElement: <Error />,
@@ -32,6 +35,14 @@ const router = createBrowserRouter([
       {
         index: true,
         path: "/",
+        element: <LandingPage />,
+        loader: dashboardLoader,
+        action: dashboardAction,
+        errorElement: <Error />,
+      },
+      {
+        index: true,
+        path: "/Home",
         element: <Dashboard />,
         loader: dashboardLoader,
         action: dashboardAction,
@@ -52,6 +63,13 @@ const router = createBrowserRouter([
       {
         path: "who-are-we",
         element: <WhoAreWePage />,
+        errorElement: <Error />,
+      },
+      {
+        path: "intro",
+        element: <Intro />,
+        loader: dashboardLoader,
+        action: dashboardAction,
         errorElement: <Error />,
       },
       {

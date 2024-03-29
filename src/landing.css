@@ -1,0 +1,120 @@
+/* landing.css */
+
+/* Background image and overlay */
+/* landing.css */
+
+/* Default background */
+.landing-page {
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.60),
+      rgba(0, 0, 0, 0.60)
+    ),
+    url("https://images.pexels.com/photos/6694931/pexels-photo-6694931.jpeg");
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, sans-serif;
+}
+
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navigation */
+nav {
+  width: 100%; 
+  padding: 10px 0;
+  background-color: rgba(255, 255, 255, 0.979);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+}
+
+nav h1 {
+  font-size: 20px; /* Adjust font size */
+  margin: 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 15px; /* Adjust margin */
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 14px; /* Adjust font size */
+}
+
+/* Article */
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 140px); /* Adjust as needed */
+}
+
+.article h1 {
+  color: #fff;
+  font-size: 36px;
+  text-align: center;
+}
+
+.article .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff6600;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.article .btn:hover {
+  background-color: #cc5500;
+}
+
+/* Video container */
+/* Video container */
+.video-container {
+  margin-top: 20px;
+  max-width: 800px; /* Adjust maximum width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.video-container video {
+  width: 50%; /* Make the video responsive */
+  height: auto; /* Ensure aspect ratio is maintained */
+  display: block; /* Center the video horizontally */
+  margin: 0 auto; /* Center the video horizontally */
+}
+
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  nav ul {
+      flex-direction: column; /* Stack items vertically */
+  }
+
+  nav ul li {
+      margin-right: 0;
+      margin-bottom: 10px; /* Add space between stacked items */
+  }
+}
+
+nav a:hover img {
+  filter: hue-rotate(145deg); 
+}
