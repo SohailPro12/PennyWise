@@ -4,7 +4,7 @@ import { Form } from "react-router-dom";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 
 // assets
-import illustration from "../assets/illustration.jpg";
+import illustration from "../assets/missionImage1.jpeg";
 
 const Intro = () => {
   return (

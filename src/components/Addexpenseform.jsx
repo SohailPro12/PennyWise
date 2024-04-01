@@ -25,7 +25,7 @@ const AddExpenseForm = ({ budgets }) => {
 
   return (
     <div className="container mt-4r">
-      <h2 className="text-center mb-4 text-danger">
+      <h2 className="text-center mb-1 text-danger">
         Add New{" "}
         <span className="accent">
           {budgets.length === 1 && `${budgets.map((budg) => budg.name)}`}
@@ -55,7 +55,7 @@ const AddExpenseForm = ({ budgets }) => {
             >
               Amount
             </label>
-            <div className="input-group">
+            <div className="input-group" style={{ marginBottom: 25 }}>
               <span className="input-group-text">$</span>
               <input
                 type="number"
@@ -70,7 +70,10 @@ const AddExpenseForm = ({ budgets }) => {
             </div>
           </div>
         </div>
-        <div className={budgets.length === 1 ? "col-md-6 d-none" : "col-md-6"}>
+        <div
+          className={budgets.length === 1 ? "col-md-6 d-none" : "col-md-6"}
+          style={{ marginTop: 0 }}
+        >
           <label htmlFor="newExpenseBudget" className="form-label text-danger">
             Budget Category
           </label>

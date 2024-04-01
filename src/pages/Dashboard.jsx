@@ -7,6 +7,7 @@ import BudgetItem from "../components/Budget_item";
 import { createBudget, createExpense, deleteItem, fetchData } from "../helpers";
 import Intro from "../components/auth_alternative";
 import { useNavigate } from "react-router-dom";
+import ReportGenerator from "../components/ReportGenerator";
 
 export function dashboardLoader() {
   const userName = fetchData("userName");
@@ -110,6 +111,9 @@ const Dashboard = () => {
                 <AddBudgetForm />
               </div>
             )}
+            <div className="col-md-12 mt-4">
+              <ReportGenerator expenses={expenses} budgets={budgets} />
+            </div>
           </div>
         </div>
       ) : (

@@ -42,10 +42,7 @@ const LandingPage = () => {
             </a>
           </li>
           <li>
-            <NavLink to="/intro">Log in</NavLink>
-          </li>
-          <li>
-            <NavLink to="/intro">Sign up</NavLink>
+            <NavLink to="/intro">Create an account</NavLink>
           </li>
         </ul>
       </nav>
@@ -61,7 +58,7 @@ const LandingPage = () => {
           className="btn"
           onClick={() => (window.location.href = "/intro")}
         >
-          Sign up, It's free!!
+          Create an account, It's free!!
         </button>
       </div>
     </section>
