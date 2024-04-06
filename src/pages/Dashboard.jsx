@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -6,7 +7,6 @@ import AddExpenseForm from "../components/Addexpenseform";
 import BudgetItem from "../components/Budget_item";
 import { createBudget, createExpense, deleteItem, fetchData } from "../helpers";
 import Intro from "../components/auth_alternative";
-import { useNavigate } from "react-router-dom";
 import ReportGenerator from "../components/ReportGenerator";
 
 export function dashboardLoader() {
@@ -71,6 +71,17 @@ const handleHistoryClick = () => {
 
 const Dashboard = () => {
   const { userName, budgets, expenses } = useLoaderData();
+  const [showInstructions, setShowInstructions] = useState(false);
+
+  const handleLindyClick = () => {
+    setShowInstructions(true);
+  };
+
+  const handleCloseInstructions = () => {
+    setShowInstructions(false);
+    // Redirect user to Lindy AI online platform
+    window.open("https://chat.lindy.ai/", "_blank");
+  };
 
   return (
     <>
@@ -114,13 +125,64 @@ const Dashboard = () => {
             <div className="col-md-12 mt-4">
               <ReportGenerator expenses={expenses} budgets={budgets} />
             </div>
+            <div className="col-md-12 mt-4">
+              <button className="btn btn-primary" onClick={handleLindyClick}>
+                Go to Lindy AI
+              </button>
+            </div>
           </div>
         </div>
       ) : (
         <Intro />
+      )}
+      {showInstructions && (
+        <div className="modal" style={modalStyle}>
+          <div className="modal-content">
+            <span className="close" onClick={handleCloseInstructions}>
+              &times;
+            </span>
+            <h2>Instructions for Using Lindy AI</h2>
+            <ol>
+              <li>Download your monthly financial report as a PDF.</li>
+              <li>Create an account on Lindy AI.</li>
+              <li>
+                Upload your financial report to Lindy AI using the following
+                prompt <br />
+                <span style={{ color: "blue" }}>
+                  Hi Lindy! Please analyze my recent spending habits, budget
+                  allocations, and financial behavior. Provide insights and
+                  recommendations to optimize my finances, including expense
+                  management, savings goals, investment opportunities, and debt
+                  management. Thank you!
+                </span>
+              </li>
+              <li>
+                Review the insights and recommendations provided by Lindy AI.
+              </li>
+            </ol>
+            <button
+              className="btn btn-primary"
+              onClick={handleCloseInstructions}
+            >
+              Okay
+            </button>
+          </div>
+        </div>
       )}
     </>
   );
 };
 
 export default Dashboard;
+
+const modalStyle = {
+  display: "block",
+  position: "fixed",
+  zIndex: "1",
+  left: "0",
+  top: "0",
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0,0,0,0.4)",
+  padding: "50px",
+};
