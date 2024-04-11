@@ -8,7 +8,7 @@ const styles = {
     margin: "0 auto",
   },
   heading: {
-    color: "red",
+    color: "blue",
     textAlign: "center",
   },
   row: {
@@ -29,7 +29,7 @@ const styles = {
     display: "block",
   },
   profileName: {
-    color: "blue",
+    color: "black",
   },
   profileDescription: {
     textAlign: "center",
@@ -48,17 +48,17 @@ const WhoWeArePage = () => {
       <div style={styles.row} className="row">
         <div style={styles.profileContainer} className="col-md-6">
           <h2 style={styles.profileName}>Sohail Charef</h2>
-          <p style={styles.profileDescription}>
-            Sohail is a passionate developer with expertise in building
-            user-friendly interfaces and exploring new technologies to enhance
-            user experiences.
-          </p>
           <img
             src={SohailImage}
             alt="Sohail Charef"
             style={styles.profileImage}
             className="img-fluid"
           />
+          <p style={styles.profileDescription}>
+            Sohail is a passionate developer with expertise in building
+            user-friendly interfaces and exploring new technologies to enhance
+            user experiences.
+          </p>
           <div style={styles.links}>
             <a
               href="https://github.com/SohailPro12"
@@ -86,19 +86,19 @@ const WhoWeArePage = () => {
           </div>
         </div>
         <div style={styles.profileContainer} className="col-md-6">
-          <h2 style={{ ...styles.profileName, color: "orange" }}>
+          <h2 style={{ ...styles.profileName, color: "black" }}>
             Mohamed Chatr
           </h2>
-          <p style={styles.profileDescription}>
-            Mohamed is a dedicated developer specializing in solving technical
-            challenges and building robust systems to support web applications.
-          </p>
           <img
             src={MohamedImage}
             alt="Mohamed Chatr"
             style={styles.profileImage}
             className="img-fluid"
           />
+          <p style={styles.profileDescription}>
+            Mohamed is a dedicated developer specializing in solving technical
+            challenges and building robust systems to support web applications.
+          </p>
           <div style={styles.links}>
             <a
               href="https://github.com/Mochatr"

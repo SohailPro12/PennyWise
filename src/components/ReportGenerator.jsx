@@ -16,9 +16,13 @@ const generateReport = (expenses, budgets) => {
   // Iterate over each budget
   budgets.forEach((budget) => {
     // Calculate total expenses for the budget
-    const totalExpense = expenses
-      .filter((expense) => expense.budgetId === budget.id)
-      .reduce((acc, curr) => acc + curr.amount, 0);
+    const budgetExpenses = expenses.filter(
+      (expense) => expense.budgetId === budget.id
+    );
+    const totalExpense = budgetExpenses.reduce(
+      (acc, curr) => acc + curr.amount,
+      0
+    );
 
     // Calculate remaining budget
     const remainingBudget = formatCurrency(budget.amount - totalExpense);
@@ -27,28 +31,24 @@ const generateReport = (expenses, budgets) => {
     tableData.push([
       { text: budget.name, style: "tableCell" },
       { text: `$${budget.amount.toFixed(2)}`, style: "tableCell" },
-      { text: "", style: "tableCell" }, // Placeholder for total expenses
-      { text: "", style: "tableCell" }, // Placeholder for money allocated for each expense
-      { text: "", style: "tableCell" }, // Placeholder for date of spending
+      {
+        text: budgetExpenses.map((expense) => expense.name).join("\n"),
+        style: "tableCell",
+      },
+      {
+        text: budgetExpenses
+          .map((expense) => formatCurrency(expense.amount))
+          .join("\n"),
+        style: "tableCell",
+      },
+      {
+        text: budgetExpenses
+          .map((expense) => new Date(expense.createdAt).toLocaleDateString())
+          .join("\n"),
+        style: "tableCell",
+      },
       { text: `${remainingBudget}`, style: "tableCell" },
     ]);
-
-    // Push expenses information to the table data
-    expenses.forEach((expense) => {
-      if (expense.budgetId === budget.id) {
-        tableData.push([
-          { text: "", style: "tableCell" }, // Empty cell for budget name (only shown once per budget)
-          { text: "", style: "tableCell" }, // Empty cell for budget amount (only shown once per budget)
-          { text: expense.name, style: "tableCell" }, // Expense name
-          { text: `${formatCurrency(expense.amount)}`, style: "tableCell" }, // Expense amount
-          {
-            text: new Date(expense.createdAt).toLocaleDateString(),
-            style: "tableCell",
-          }, // Date of spending
-          { text: "", style: "tableCell" }, // Empty cell for remaining budget (only shown once per budget)
-        ]);
-      }
-    });
   });
 
   // Define the table layout

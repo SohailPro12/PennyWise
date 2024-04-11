@@ -38,6 +38,10 @@ nav h1 {
   font-size: 20px; /* Adjust font size */
   margin: 0;
 }
+h1 {
+  font-size: 20px; /* Adjust font size */
+  margin-bottom: 20px;
+}
 
 nav ul {
   list-style-type: none;
@@ -79,7 +83,8 @@ nav ul li a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
-  border-radius: 5px;
+  margin-top: 20px;
+  border-radius: 10px;
   transition: background-color 0.3s;
 }
 

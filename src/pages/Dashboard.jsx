@@ -42,16 +42,31 @@ export async function dashboardAction({ request }) {
   }
   if (_action === "createExpense") {
     try {
+      const budgets = fetchData("budgets");
+      const expenses = fetchData("expenses");
+      const budget = budgets.find((b) => b.id === values.newExpenseBudget);
+      const totalExpense = expenses
+        .filter((expense) => expense.budgetId === values.newExpenseBudget)
+        .reduce((acc, curr) => acc + curr.amount, 0);
+      const remainingBudget = budget.amount - totalExpense;
+
+      const newExpenseAmount = parseFloat(values.newExpenseAmount);
+      if (newExpenseAmount > remainingBudget) {
+        throw new Error("Creating this expense will exceed the budget amount.");
+      }
+
       createExpense({
         name: values.newExpense,
-        amount: values.newExpenseAmount,
+        amount: newExpenseAmount,
         budgetId: values.newExpenseBudget,
       });
+
       return toast.success(`Expense ${values.newExpense} added!`);
     } catch (e) {
-      throw new Error("There was a problem creating your Budget.");
+      return toast.error(e.message);
     }
   }
+
   if (_action === "deleteExpense") {
     try {
       deleteItem({
@@ -164,7 +179,7 @@ const Dashboard = () => {
               className="btn btn-primary"
               onClick={handleCloseInstructions}
             >
-              Okay
+              Go to lindy AI!
             </button>
           </div>
         </div>
