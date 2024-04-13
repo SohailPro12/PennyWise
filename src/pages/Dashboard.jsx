@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import AddBudgetForm from "../components/Add_budget_form";
 import AddExpenseForm from "../components/Addexpenseform";
 import BudgetItem from "../components/Budget_item";
@@ -42,31 +41,16 @@ export async function dashboardAction({ request }) {
   }
   if (_action === "createExpense") {
     try {
-      const budgets = fetchData("budgets");
-      const expenses = fetchData("expenses");
-      const budget = budgets.find((b) => b.id === values.newExpenseBudget);
-      const totalExpense = expenses
-        .filter((expense) => expense.budgetId === values.newExpenseBudget)
-        .reduce((acc, curr) => acc + curr.amount, 0);
-      const remainingBudget = budget.amount - totalExpense;
-
-      const newExpenseAmount = parseFloat(values.newExpenseAmount);
-      if (newExpenseAmount > remainingBudget) {
-        throw new Error("Creating this expense will exceed the budget amount.");
-      }
-
       createExpense({
         name: values.newExpense,
-        amount: newExpenseAmount,
+        amount: values.newExpenseAmount,
         budgetId: values.newExpenseBudget,
       });
-
       return toast.success(`Expense ${values.newExpense} added!`);
     } catch (e) {
-      return toast.error(e.message);
+      throw new Error("There was a problem creating your Budget.");
     }
   }
-
   if (_action === "deleteExpense") {
     try {
       deleteItem({
@@ -86,15 +70,14 @@ const handleHistoryClick = () => {
 
 const Dashboard = () => {
   const { userName, budgets, expenses } = useLoaderData();
-  const [showInstructions, setShowInstructions] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
 
-  const handleLindyClick = () => {
-    setShowInstructions(true);
+  const handleOpenLindy = () => {
+    setShowPrompt(true);
   };
 
-  const handleCloseInstructions = () => {
-    setShowInstructions(false);
-    // Redirect user to Lindy AI online platform
+  const handleClosePrompt = () => {
+    setShowPrompt(false);
     window.open("https://chat.lindy.ai/", "_blank");
   };
 
@@ -141,63 +124,39 @@ const Dashboard = () => {
               <ReportGenerator expenses={expenses} budgets={budgets} />
             </div>
             <div className="col-md-12 mt-4">
-              <button className="btn btn-primary" onClick={handleLindyClick}>
-                Go to Lindy AI
+              <button className="btn btn-primary" onClick={handleOpenLindy}>
+                Analyze with Lindy AI
               </button>
             </div>
+            {showPrompt && (
+              <div className="modal">
+                <div className="modal-content">
+                  <span className="close" onClick={handleClosePrompt}>
+                    &times;
+                  </span>
+                  <p>
+                    Hi Lindy! Please analyze my recent spending habits, budget
+                    allocations, and financial behavior. Provide insights and
+                    recommendations to optimize my finances, including expense
+                    management, savings goals, investment opportunities, and
+                    debt management. Thank you!
+                  </p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleClosePrompt}
+                  >
+                    Okay
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ) : (
         <Intro />
-      )}
-      {showInstructions && (
-        <div className="modal" style={modalStyle}>
-          <div className="modal-content">
-            <span className="close" onClick={handleCloseInstructions}>
-              &times;
-            </span>
-            <h2>Instructions for Using Lindy AI</h2>
-            <ol>
-              <li>Download your monthly financial report as a PDF.</li>
-              <li>Create an account on Lindy AI.</li>
-              <li>
-                Upload your financial report to Lindy AI using the following
-                prompt <br />
-                <span style={{ color: "blue" }}>
-                  Hi Lindy! Please analyze my recent spending habits, budget
-                  allocations, and financial behavior. Provide insights and
-                  recommendations to optimize my finances, including expense
-                  management, savings goals, investment opportunities, and debt
-                  management. Thank you!
-                </span>
-              </li>
-              <li>
-                Review the insights and recommendations provided by Lindy AI.
-              </li>
-            </ol>
-            <button
-              className="btn btn-primary"
-              onClick={handleCloseInstructions}
-            >
-              Go to lindy AI!
-            </button>
-          </div>
-        </div>
       )}
     </>
   );
 };
 
 export default Dashboard;
-
-const modalStyle = {
-  display: "block",
-  position: "fixed",
-  zIndex: "1",
-  left: "0",
-  top: "0",
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0,0,0,0.4)",
-  padding: "50px",
-};

@@ -79,9 +79,15 @@ export const formatPercentage = (amount) => {
 };
 
 // Format currency
+// helpers.jsx
+
 export const formatCurrency = (amount) => {
-  return amount.toLocaleString(undefined, {
-    style: "currency",
-    currency: "MAD",
-  });
+  if (amount !== null && amount !== undefined) {
+    return amount.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  } else {
+    return "";
+  }
 };
