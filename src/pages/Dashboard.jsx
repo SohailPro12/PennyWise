@@ -41,12 +41,25 @@ export async function dashboardAction({ request }) {
   }
   if (_action === "createExpense") {
     try {
-      createExpense({
-        name: values.newExpense,
-        amount: values.newExpenseAmount,
-        budgetId: values.newExpenseBudget,
-      });
-      return toast.success(`Expense ${values.newExpense} added!`);
+      const budgets = fetchData("budgets");
+      const expenses = fetchData("expenses");
+      const budget = budgets.find((b) => b.id === values.newExpenseBudget);
+      const totalExpenses = expenses
+        .filter((expense) => expense.budgetId === values.newExpenseBudget)
+        .reduce((acc, expense) => acc + expense.amount, 0);
+      const newExpenseAmount = parseFloat(values.newExpenseAmount);
+      if (totalExpenses + newExpenseAmount > budget.amount) {
+        toast.warning("Warning: Expense amount exceeds budget allocation!");
+
+        return false;
+      } else {
+        createExpense({
+          name: values.newExpense,
+          amount: values.newExpenseAmount,
+          budgetId: values.newExpenseBudget,
+        });
+        return toast.success(`Expense ${values.newExpense} added!`);
+      }
     } catch (e) {
       throw new Error("There was a problem creating your Budget.");
     }
@@ -129,18 +142,31 @@ const Dashboard = () => {
               </button>
             </div>
             {showPrompt && (
-              <div className="modal">
+              <div className="modal" style={modalStyle}>
                 <div className="modal-content">
-                  <span className="close" onClick={handleClosePrompt}>
+                  <span className="close" onClick={handleOpenLindy}>
                     &times;
                   </span>
-                  <p>
-                    Hi Lindy! Please analyze my recent spending habits, budget
-                    allocations, and financial behavior. Provide insights and
-                    recommendations to optimize my finances, including expense
-                    management, savings goals, investment opportunities, and
-                    debt management. Thank you!
-                  </p>
+                  <h2>Instructions for Using Lindy AI</h2>
+                  <ol>
+                    <li>Download your monthly financial report as a PDF.</li>
+                    <li>Create an account on Lindy AI.</li>
+                    <li>
+                      Upload your financial report to Lindy AI using this custom
+                      prompt feature. <br></br>
+                      <p style={{ color: "blue" }}>
+                        Hi Lindy! Please analyze my recent spending habits,
+                        budget allocations, and financial behavior. Provide
+                        insights and recommendations to optimize my finances,
+                        including expense management, savings goals, investment
+                        opportunities, and debt management. Thank you!
+                      </p>
+                    </li>
+                    <li>
+                      Review the insights and recommendations provided by Lindy
+                      AI.
+                    </li>
+                  </ol>
                   <button
                     className="btn btn-primary"
                     onClick={handleClosePrompt}
@@ -160,3 +186,15 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+const modalStyle = {
+  display: "block",
+  position: "fixed",
+  zIndex: "1",
+  left: "0",
+  top: "0",
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0,0,0,0.4)",
+  padding: "50px",
+};
