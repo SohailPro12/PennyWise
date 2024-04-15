@@ -15,7 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // layouts
 import Main, { mainLoader } from "./layouts/Main";
 
-//actions
+// actions
 import { deleteUserAction } from "./actions/Deleteuser";
 import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage";
 import { deleteBudget } from "./actions/deleteBudget";

@@ -1,10 +1,10 @@
 // react router dom imports
 import { Outlet, useLoaderData } from "react-router-dom";
-//helper functions
+// helper functions
 import { fetchData } from "../helpers";
 
 // assests
-//components
+// components
 import Nav from "../components/Nav";
 import Footer from "../components/footer";
 // loader
